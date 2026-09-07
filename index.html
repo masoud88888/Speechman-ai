@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpeechMan AI</title>
+    <meta name="description" content="Convert English text into high-quality male voices using Gemini Text-to-Speech API." />
+    <meta property="og:title" content="SpeechMan AI" />
+    <meta property="og:description" content="Convert English text into high-quality male voices using Gemini Text-to-Speech API." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function() {
+        // Ensure window.fetch is writable and configurable so external wrappers or dev tools never throw "Cannot set property fetch of #<Window> which has only a getter"
+        try {
+          var _currentFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+              return _currentFetch;
+            },
+            set: function(fn) {
+              _currentFetch = fn;
+            }
+          });
+        } catch (e) {}
+
+        // Also define property on Window.prototype if accessible
+        try {
+          if (window.Window && window.Window.prototype) {
+            var protoDesc = Object.getOwnPropertyDescriptor(window.Window.prototype, 'fetch');
+            if (protoDesc && (!protoDesc.set || !protoDesc.writable)) {
+              var _protoFetch = window.Window.prototype.fetch;
+              Object.defineProperty(window.Window.prototype, 'fetch', {
+                configurable: true,
+                enumerable: true,
+                get: function() {
+                  return _protoFetch;
+                },
+                set: function(val) {
+                  _protoFetch = val;
+                }
+              });
+            }
+          }
+        } catch (e) {}
+
+        // Intercept and swallow iframe postMessage errors if parent disconnects
+        try {
+          window.addEventListener('securitypolicyviolation', function(e) {
+            e.stopPropagation();
+          });
+        } catch (e) {}
+
+        // Gracefully catch standard media AbortErrors, empty unhandled rejections, and audio element errors
+        window.addEventListener('unhandledrejection', function(event) {
+          if (!event) return;
+          var reason = event.reason;
+          if (!reason) {
+            event.preventDefault();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+            return;
+          }
+          var msg = (reason && (reason.message || reason.name || String(reason))) || '';
+          if (
+            !msg.trim() ||
+            msg === 'undefined' ||
+            msg === 'null' ||
+            msg === '[object Object]' ||
+            reason.name === 'AbortError' ||
+            msg.indexOf('Cannot set property fetch') !== -1 ||
+            msg.indexOf('only a getter') !== -1 ||
+            msg.indexOf('interrupted by a call to pause') !== -1 ||
+            msg.indexOf('AbortError') !== -1 ||
+            msg.indexOf('The play() request was interrupted') !== -1
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+            return;
+          }
+        });
+
+        // Catch capturing media element error events, fetch getter errors, or blank errors
+        window.addEventListener('error', function(event) {
+          if (!event) return;
+          var target = event.target;
+          var isMedia = target && (target.tagName === 'AUDIO' || target.tagName === 'VIDEO' || (window.HTMLMediaElement && target instanceof window.HTMLMediaElement));
+          var msg = event.message || (event.error && event.error.message) || '';
+          if (
+            isMedia ||
+            !msg ||
+            !String(msg).trim() ||
+            msg === 'Uncaught ' ||
+            msg === 'Script error.' ||
+            msg.indexOf('Cannot set property fetch') !== -1 ||
+            msg.indexOf('only a getter') !== -1
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+
+        // Global onerror fallback for blank or unhandled errors
+        var _originalOnError = window.onerror;
+        window.onerror = function(message, source, lineno, colno, error) {
+          var str = message ? String(message).trim() : '';
+          if (
+            !str ||
+            str === 'Uncaught ' ||
+            str === 'Uncaught' ||
+            str === 'Script error.' ||
+            str.indexOf('Cannot set property fetch') !== -1 ||
+            str.indexOf('only a getter') !== -1
+          ) {
+            return true;
+          }
+          if (_originalOnError) {
+            return _originalOnError.apply(this, arguments);
+          }
+          return false;
+        };
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-teal-500/30 selection:text-teal-200 min-h-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
