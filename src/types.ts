@@ -1,4 +1,14 @@
-export type VoiceName = "Charon" | "Puck" | "Fenrir";
+export type VoiceName =
+  | "Charon"
+  | "Puck"
+  | "Fenrir"
+  | "Kore"
+  | "Orus"
+  | "Alnilam"
+  | "Gacrux"
+  | "Rasalgethi"
+  | "Algenib"
+  | "Sadaltager";
 
 export interface VoiceOption {
   name: VoiceName;
