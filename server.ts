@@ -51,7 +51,7 @@ async function startServer() {
 
   app.post("/api/tts", async (req, res) => {
     try {
-      const { text, voiceName } = req.body || {};
+      const { text, voiceName, pitch } = req.body || {};
 
       if (!text || !text.trim()) {
         return res.status(400).json({
