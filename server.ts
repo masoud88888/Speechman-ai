@@ -51,7 +51,7 @@ async function startServer() {
 
   app.post("/api/tts", async (req, res) => {
     try {
-      const { text, voiceName, pitch } = req.body || {};
+     const { text, voiceName } = req.body || {};
 
       if (!text || !text.trim()) {
         return res.status(400).json({
@@ -121,11 +121,7 @@ async function startServer() {
               {
                 parts: [
                   {
-                    text: `Please read this transcript aloud clearly and verbatim.
-Pitch: ${pitch ?? 1.0}
-
-Transcript:
-${normalizedText}`,
+                    text: `Please read this transcript aloud clearly and verbatim:\n\n${normalizedText}`,
                   },
                 ],
               },
