@@ -76,7 +76,18 @@ async function startServer() {
         });
       }
 
-      const validVoices = ["Charon", "Fenrir", "Puck"];
+      const validVoices = [
+  "Charon",
+  "Fenrir",
+  "Puck",
+  "Kore",
+  "Orus",
+  "Alnilam",
+  "Gacrux",
+  "Rasalgethi",
+  "Algenib",
+  "Sadaltager",
+];
 
       const selectedVoice = validVoices.includes(voiceName)
         ? voiceName
