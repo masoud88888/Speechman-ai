@@ -121,7 +121,11 @@ async function startServer() {
               {
                 parts: [
                   {
-                    text: `Please read this transcript aloud clearly and verbatim:\n\n${normalizedText}`,
+                    text: `Please read this transcript aloud clearly and verbatim.
+Pitch: ${pitch ?? 1.0}
+
+Transcript:
+${normalizedText}`,
                   },
                 ],
               },
